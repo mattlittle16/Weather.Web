@@ -4,3 +4,60 @@
   padding: 2rem;
   text-align: center;
 }
+
+.white-container p,span,h1,h2,h3,h4,h5,h6,label {
+    color: #636e72 !important;
+}
+
+/* generics */
+.cmr-1 {
+    margin-right: 1rem !important;
+}
+
+.cmr-2 {
+    margin-right: 2rem !important;
+}
+
+.cml-1 {
+    margin-left: 1rem !important;
+}
+
+.cml-2 {
+    margin-left: 2rem !important;
+}
+
+.cmt-2 {
+    margin-top: 2rem !important;
+}
+
+.cmt-1 {
+    margin-top: 1rem !important;
+}
+
+.c-fr {
+    float: right !important;
+}
+
+.c-fl {
+    float: left !important;
+}
+
+.c-clear {
+    clear: both !important;
+}
+
+.ccenter {
+    margin: 0 auto !important;
+}
+
+.ctext-center {
+    text-align: center !important;
+}
+
+.cflex-justify-end {
+    justify-content: flex-end !important;
+}
+
+.cfull-width {
+    width: 100% !important;
+}

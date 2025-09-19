@@ -14,12 +14,14 @@ const LocationContext = createContext<ILocationContext | null>(null);
 
 const LocationProvider = ({ children }: any) => {
     const storedLocations = localStorage.getItem("savedLocations");
+    console.log('stored locations', storedLocations);
     const initialLocations = storedLocations ? JSON.parse(storedLocations) as ILocationContext : undefined;
 
     const [currentLocation, setCurrentLocation] = useState<ILocation | null>(initialLocations?.currentLocation || null);
     const [savedLocations, setSavedLocations] = useState<ILocation[]>(initialLocations?.savedLocations || []);
 
     const updateCurrentLocation = (location: ILocation) => {
+        console.log('updating current location {location}', JSON.stringify(location));
         setCurrentLocation(location);
         localStorage.setItem("savedLocations", JSON.stringify({ currentLocation: location, savedLocations }));
     };

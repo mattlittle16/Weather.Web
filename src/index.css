@@ -28,6 +28,12 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #18022a !important;
+  color: rgba(255, 255, 255, 0.87) !important;
+}
+
+html {
+  background-color: #18022a !important;
 }
 
 h1 {
