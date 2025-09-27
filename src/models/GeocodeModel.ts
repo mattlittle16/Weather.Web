@@ -1,7 +1,7 @@
 export interface IGeocode {
     name?: string;
-    latitude?: number;
-    longitude?: number;
+    lat?: number;
+    lon?: number;
     country?: string;
     state?: string;
 };
