@@ -54,6 +54,12 @@ export const LocationSlider = () => {
         }
     }
 
+    const handleRefreshWeather = async () => {
+        if (currentLocation) {
+            await refreshWeather(currentLocation.lat, currentLocation.lon);
+        }
+    }
+
     useEffect(() => {
         const fetchLocation = async () => {
             const response = await refreshCurrentLocation();
@@ -85,7 +91,8 @@ export const LocationSlider = () => {
                             {currentWeather?.currentCondition.temperature.toFixedNumber(0)} °F
                             <br />
                             {currentWeather?.currentCondition.description.toPascalCase()}
-
+                            <br />
+                            <i onClick={handleRefreshWeather} className="fa cmt-1 fa-icon fa-repeat"></i>
                         </p>
                     </div>
                 </div>
