@@ -127,7 +127,7 @@ export const WeatherDisplay = () => {
                                                 </Col>
                                             </Row>
                                             {currentWeather.currentCondition.windGusts > 0 && (
-                                                <Row>
+                                                <Row className="mb-2">
                                                     <Col xs={7} className="text-start">
                                                         <i className="fa fa-flag" aria-hidden="true"></i> Wind Gusts
                                                     </Col>
@@ -136,6 +136,22 @@ export const WeatherDisplay = () => {
                                                     </Col>
                                                 </Row>
                                             )}
+                                            <Row className="mb-2">
+                                                <Col xs={7} className="text-start">
+                                                    <i className="fa fa-sun-o" aria-hidden="true" style={{ color: '#FFD700' }}></i> Sunrise
+                                                </Col>
+                                                <Col xs={5} className="text-start">
+                                                    <strong>{formatTime(currentWeather.dailyConditions[0].sunrise)}</strong>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col xs={7} className="text-start">
+                                                    <i className="fa fa-moon-o" aria-hidden="true" style={{ color: '#FFA500' }}></i> Sunset
+                                                </Col>
+                                                <Col xs={5} className="text-start">
+                                                    <strong>{formatTime(currentWeather.dailyConditions[0].sunset)}</strong>
+                                                </Col>
+                                            </Row>
                                         </Card.Body>
                                     </Card>
                                 </Col>
@@ -222,6 +238,18 @@ export const WeatherDisplay = () => {
                                                     <Col xs={6} md={2} className="text-center">
                                                         <small>
                                                             <i className="fa fa-sun-o"></i> UV {day.uvIndex.toFixedNumber(1)}
+                                                        </small>
+                                                    </Col>
+                                                </Row>
+                                                <Row className="mt-2">
+                                                    <Col xs={6} className="text-center">
+                                                        <small>
+                                                            <i className="fa fa-sun-o" style={{ color: '#FFD700' }}></i> {formatTime(day.sunrise)}
+                                                        </small>
+                                                    </Col>
+                                                    <Col xs={6} className="text-center">
+                                                        <small>
+                                                            <i className="fa fa-moon-o" style={{ color: '#FFA500' }}></i> {formatTime(day.sunset)}
                                                         </small>
                                                     </Col>
                                                 </Row>
