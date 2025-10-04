@@ -86,24 +86,22 @@ export const useBackground = (): string => {
         return defaultBackground;
     }, [currentWeather]);
 
-    // Apply background to body element
+    // Apply background using a separate animated div
     useEffect(() => {
-        document.body.style.backgroundImage = `url(${backgroundImage})`;
-        document.body.style.backgroundSize = 'cover';
-        document.body.style.backgroundPosition = 'center';
-        document.body.style.backgroundRepeat = 'no-repeat';
-        document.body.style.backgroundAttachment = 'fixed';
-        document.body.style.minHeight = '100vh';
+        // Create or get the animated background div
+        let bgDiv = document.querySelector('.animated-background') as HTMLDivElement;
         
-        // Cleanup function to reset background when component unmounts
-        return () => {
-            document.body.style.backgroundImage = '';
-            document.body.style.backgroundSize = '';
-            document.body.style.backgroundPosition = '';
-            document.body.style.backgroundRepeat = '';
-            document.body.style.backgroundAttachment = '';
-            document.body.style.minHeight = '';
-        };
+        if (!bgDiv) {
+            bgDiv = document.createElement('div');
+            bgDiv.className = 'animated-background';
+            document.body.prepend(bgDiv);
+            console.log('Created animated background div');
+        }
+        
+        // Set the background image
+        bgDiv.style.backgroundImage = `url(${backgroundImage})`;
+        console.log('Set background image:', backgroundImage);
+        
     }, [backgroundImage]);
 
     return backgroundImage;
