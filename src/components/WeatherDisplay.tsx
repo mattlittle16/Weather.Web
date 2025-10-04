@@ -180,16 +180,20 @@ export const WeatherDisplay = () => {
                                                     </Col>
                                                     <Col xs={6} md={2} className="text-center">
                                                         <small>
-                                                            <i className="fa fa-flag"></i> {hour.windSpeed.toFixedNumber(0)} mph
+                                                            wind: {hour.windSpeed.toFixedNumber(0)} mph <i className="fa fa-flag"></i>
                                                         </small>
                                                         <br />
                                                         <small>
-                                                            <i className="fa fa-tint"></i> {hour.humidity}%
+                                                            rain: {hour.rainChance.toCeiling()}% <i className="fa fa-tint"></i>
                                                         </small>
                                                     </Col>
                                                     <Col xs={6} md={2} className="text-center">
                                                         <small>
-                                                            <i className="fa fa-cloud"></i> {hour.cloudPercentage}%
+                                                            cloud %: {hour.cloudPercentage.toCeiling()}% <i className="fa fa-cloud"></i>
+                                                        </small>
+                                                        <br />
+                                                        <small>
+                                                            humidity: {hour.humidity.toCeiling()}% <i className="fa fa-tint"></i>
                                                         </small>
                                                     </Col>
                                                 </Row>
@@ -228,28 +232,32 @@ export const WeatherDisplay = () => {
                                                     </Col>
                                                     <Col xs={6} md={2} className="text-center">
                                                         <small>
-                                                            <i className="fa fa-flag"></i> {day.windSpeed.toFixedNumber(0)} mph
+                                                            wind: {day.windSpeed.toFixedNumber(0)} mph <i className="fa fa-flag"></i>
                                                         </small>
                                                         <br />
                                                         <small>
-                                                            <i className="fa fa-tint"></i> {day.humidity}%
+                                                            rain: {day.rainChance.toCeiling()}% <i className="fa fa-tint"></i>
                                                         </small>
                                                     </Col>
                                                     <Col xs={6} md={2} className="text-center">
                                                         <small>
-                                                            <i className="fa fa-sun-o"></i> UV {day.uvIndex.toFixedNumber(1)}
+                                                            UV: {day.uvIndex.toFixedNumber(1)} <i className="fa fa-sun-o"></i>
+                                                        </small>
+                                                        <br />
+                                                        <small>
+                                                            humidity: {day.humidity.toCeiling()}% <i className="fa fa-tint"></i>
                                                         </small>
                                                     </Col>
                                                 </Row>
                                                 <Row className="mt-2">
                                                     <Col xs={6} className="text-center">
                                                         <small>
-                                                            <i className="fa fa-sun-o" style={{ color: '#FFD700' }}></i> {formatTime(day.sunrise)}
+                                                            {formatTime(day.sunrise)} <i className="fa fa-sun-o" style={{ color: '#FFD700' }}></i>
                                                         </small>
                                                     </Col>
                                                     <Col xs={6} className="text-center">
                                                         <small>
-                                                            <i className="fa fa-moon-o" style={{ color: '#FFA500' }}></i> {formatTime(day.sunset)}
+                                                            {formatTime(day.sunset)} <i className="fa fa-moon-o" style={{ color: '#FFA500' }}></i>
                                                         </small>
                                                     </Col>
                                                 </Row>

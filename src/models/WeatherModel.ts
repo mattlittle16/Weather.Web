@@ -29,7 +29,8 @@ export interface IHourlyCondition {
   windSpeed: number
   windGusts: number
   description: string
-  descriptionId: number
+  descriptionId: number,
+  rainChance: number
 }
 
 export interface IDailyCondition {
@@ -47,6 +48,7 @@ export interface IDailyCondition {
   descriptionId: number
   cloudPercentage: number
   uvIndex: number
+  rainChance: number
 }
 
 export interface ITemp {
