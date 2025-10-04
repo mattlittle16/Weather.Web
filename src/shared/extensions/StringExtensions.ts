@@ -14,7 +14,7 @@ Number.prototype.toFixedNumber = function (this: number, digits: number): number
 };
 
 Number.prototype.toCeiling = function (this: number): number {
-    return Math.ceil(parseFloat(this.toFixed(0)));
+    return parseFloat(Math.ceil(this).toFixed(0));
 };
 
 String.prototype.toPascalCase = function (this: string): string {

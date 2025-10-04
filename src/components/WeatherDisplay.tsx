@@ -184,7 +184,7 @@ export const WeatherDisplay = () => {
                                                         </small>
                                                         <br />
                                                         <small>
-                                                            rain: {hour.rainChance.toCeiling()}% <i className="fa fa-tint"></i>
+                                                            rain: {(hour.rainChance * 100).toFixed(0)}% <i className="fa fa-tint"></i>
                                                         </small>
                                                     </Col>
                                                     <Col xs={6} md={2} className="text-center">
@@ -236,7 +236,7 @@ export const WeatherDisplay = () => {
                                                         </small>
                                                         <br />
                                                         <small>
-                                                            rain: {day.rainChance.toCeiling()}% <i className="fa fa-tint"></i>
+                                                            rain: {(day.rainChance * 100).toFixed(0)}% <i className="fa fa-tint"></i>
                                                         </small>
                                                     </Col>
                                                     <Col xs={6} md={2} className="text-center">
