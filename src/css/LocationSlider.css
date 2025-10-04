@@ -29,7 +29,7 @@
 
 #top-location-container #top-location-right i:hover {
     cursor: pointer;
-    color: chartreuse;
+    color: chartreuse; 
 }
 
 #top-location-container .top-location-item {
