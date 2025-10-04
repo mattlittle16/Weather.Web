@@ -1,0 +1,141 @@
+#top-location-container {
+    display:flex;
+    justify-items: flex-start;
+    align-items: stretch;
+    flex-direction: row;
+    position: fixed;
+    top: 0;
+    left: 35%;
+    width: 30%;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0px -1px 13px 0px rgb(82 37 118);
+    background: #24004196;
+    z-index: 1000;
+}
+#top-location-container #top-location-left {
+    flex: 0 1 50%;
+    padding: 1rem;
+    text-align: center;
+}
+#top-location-container #top-location-right {
+    flex: auto;
+    padding: 1rem;
+    text-align: center;
+}
+
+#top-location-container .top-location-item {
+    display: inline-block;
+    padding: 0.5rem 0.5rem;
+    border: 1px solid #2d3436;
+    border-radius: 4px;
+    background: #2d3436;
+}
+
+/* Modal styling */
+.location-modal .modal-content {
+    background: rgb(52 47 95 / 53%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.location-modal .modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.location-modal .modal-title {
+    color: white;
+    font-weight: 500;
+}
+
+.location-modal .btn-close {
+    filter: invert(1);
+    opacity: 0.8;
+}
+
+.location-modal .btn-close:hover {
+    opacity: 1;
+}
+
+.location-modal h6 {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+.location-modal .separator {
+    position: relative;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+}
+
+.location-modal .separator span {
+    background: rgb(52 47 95 / 53%);
+    padding: 0 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.location-modal .separator::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.location-modal .form-control {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.location-modal .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.location-modal .form-control:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+}
+
+.location-modal .form-label {
+    color: white;
+    font-weight: 500;
+}
+
+.location-modal .text-danger {
+    color: #ff6b6b !important;
+}
+
+.location-modal .country-section {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.location-modal .search-options-container {
+    background: rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.location-modal .search-option {
+    padding: 10px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    #top-location-container {
+        left: 2%;
+        width: 96%;
+    }
+}

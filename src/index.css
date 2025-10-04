@@ -60,6 +60,15 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Modal backdrop styling */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.85) !important;
+}
+
+.modal-backdrop.show {
+  opacity: 0.85 !important;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

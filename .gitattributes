@@ -1,0 +1,7 @@
+**/terraform/terraform.tfvars  filter=git-crypt diff=git-crypt
+**/terraform/terraform.tfstate  filter=git-crypt diff=git-crypt
+**/terraform/terraform.tfstate.backup  filter=git-crypt diff=git-crypt
+**/.env  filter=git-crypt diff=git-crypt
+**/generate-icons.html  filter=git-crypt diff=git-crypt
+**/scripts/deploy.sh  filter=git-crypt diff=git-crypt
+**/.github/copilot-instructions.md filter=git-crypt diff=git-crypt

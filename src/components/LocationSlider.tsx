@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useLocation } from "../shared/LocationProvider";
 import { Button, Form, Modal } from "react-bootstrap";
 import { processFormDataChangeEvent } from "../helpers/Forms";
-import { geoCode, reverseGeocode } from "../loaders/ApiLoader";
-import type { ILocation } from "../models/LocationModel";
 import { CountrySelect } from "../shared/CountrySelect";
+import { LocationRefreshStatus } from "../shared/enums/Enums";
+import "../css/LocationSlider.css";
+import { useWeather } from "../shared/WeatherProvider";
 
 
 export const LocationSlider = () => {
@@ -15,7 +16,8 @@ export const LocationSlider = () => {
         countryCode?: string;
     }
 
-    const { currentLocation, setCurrentLocation } = useLocation();
+    const { refreshWeather, currentWeather } = useWeather();
+    const { currentLocation, refreshCurrentLocationManually, refreshCurrentLocation } = useLocation();
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
     const [formData, setFormData] = useState<ILocationForm>({
@@ -32,57 +34,34 @@ export const LocationSlider = () => {
     const handleSearch = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        try {
-            const location = await geoCode(formData.countryCode!, formData.city, formData.state, formData.postal);
-            if (location && location.lat && location.lon) {
-                setCurrentLocation({
-                    lat: location.lat!.toFixedNumber(2),
-                    lon: location.lon!.toFixedNumber(2),
-                    city: location.name,
-                    state: location.state,
-                    postalCode: formData.postal,
-                    country: location.country,
-                } as ILocation);
-                handleClose();
-            } else {
-                alert("Location not found. Please try again.");
-            }
-        } catch (error) {
-            console.error("Error occurred while searching for location:", error);
+        const response = await refreshCurrentLocationManually(formData.countryCode!, formData.city, formData.state, formData.postal);
+        if (response.status === LocationRefreshStatus.NotFound) {
+            alert("Location not found. Please try again.");
+        } else if (response.status === LocationRefreshStatus.Success && response.location) {
+            await refreshWeather(response.location.lat, response.location.lon);
+            setShowModal(false);
+            setFormData({ city: '', state: '', postal: '', countryCode: 'us' });
         }
     };
 
+    const handleGetCurrentLocation = async () => {
+        const response = await refreshCurrentLocation();
+        if (response.status === LocationRefreshStatus.Error) {
+            alert("Error fetching current location. Please try again.");
+        } else if (response.status === LocationRefreshStatus.Success && response.location) {
+            await refreshWeather(response.location.lat, response.location.lon);
+            setShowModal(false);
+        }
+    }
+
     useEffect(() => {
         const fetchLocation = async () => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    async (position) => {
-                        const latitude = position.coords.latitude;
-                        const longitude = position.coords.longitude;
-
-                        const location = await reverseGeocode(latitude, longitude);
-                        console.log('reverse geocode location', location);
-
-                        console.log('setting current location');
-                        setCurrentLocation({
-                            lat: location.lat!.toFixedNumber(2),
-                            lon: location.lon!.toFixedNumber(2),
-                            city: location.name,
-                            state: location.state,
-                            country: location.country
-                        } as ILocation);
-                    },
-                    (error) => {
-                        console.error("Error obtaining location:", error);
-                    },
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 5000,
-                        maximumAge: 10000
-                    });
-            } else {
+            const response = await refreshCurrentLocation();
+            if (response.status === LocationRefreshStatus.Error) {
                 setShowModal(true);
-            };
+            } else if (response.status === LocationRefreshStatus.Success && response.location) {
+                await refreshWeather(response.location.lat, response.location.lon);
+            }
         }
 
         fetchLocation();
@@ -92,44 +71,109 @@ export const LocationSlider = () => {
 
     return (
         <div>
-            Location Slider Component
             {currentLocation && (
-                <div>
-                    <p>Latitude: {currentLocation.lat}</p>
-                    <p>Longitude: {currentLocation.lon}</p>
-                    <p>City: {currentLocation.city}</p>
-                    <p>State: {currentLocation.state}</p>
-                    <p>Country: {currentLocation.country}</p>
-                    <Button variant='outline-info' size="sm" onClick={() => setShowModal(true)}>Change Location</Button>
+                <div id="top-location-container">
+                    <div id="top-location-left">
+                        <p>{currentLocation.location}, {currentLocation.state}</p>
+                        <Button variant='outline-info' size="sm" onClick={() => setShowModal(true)}>
+                            Change Location
+                            <i className="fa fa-icon fa-search" style={{ marginLeft: '5px' }}></i>
+                        </Button>
+                    </div>
+                    <div id="top-location-right">
+                        <p>
+                            {currentWeather?.currentCondition.temperature.toFixedNumber(0)} °F
+                            <br />
+                            {currentWeather?.currentCondition.description.toPascalCase()}
+
+                        </p>
+                    </div>
                 </div>
             )}
             {showModal && (
                 <Modal
                     show={showModal}
                     onHide={handleClose}
-                    backdrop="static"
+                    backdrop={currentLocation === null ? "static" : undefined}
                     keyboard={false}
-                    className='white-container'
+                    className='location-modal'
+                    size="lg"
+                    centered
                 >
+                    <Modal.Header closeButton={currentLocation !== null}>
+                        <Modal.Title>Change Location</Modal.Title>
+                    </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={handleSearch}>
-                            <h4 className='ctext-center'>Please allow location services or search below</h4>
-                            <Form.Group className="mb-3" controlId="countryCode">
+                            <div className="mb-4">
+                                <Button 
+                                    onClick={handleGetCurrentLocation} 
+                                    variant='outline-info' 
+                                    size="sm" 
+                                    className='w-100' 
+                                    type="button"
+                                >
+                                    <i className="fa fa-map-marker" style={{ marginRight: '8px' }}></i>
+                                    Get Current Location
+                                </Button>
+                            </div>
+
+                            <div className="text-center mb-3 separator">
+                                <span>OR</span>
+                            </div>
+
+                            
+
+                            <Form.Group className="mb-4 country-section" controlId="countryCode">
+                                <Form.Label>Country <span className="text-danger">*</span> <small>(required for all searches below)</small></Form.Label>
                                 <CountrySelect value={formData.countryCode!} onChange={(value) => setFormData({ ...formData, countryCode: value })} />
                             </Form.Group>
-                            <hr />
-                            <Form.Group className="mb-3" controlId="postal">
-                                <Form.Control type="text" placeholder="Enter a postal code" name="postal" value={formData.postal} onChange={handleFormChange} />
-                            </Form.Group>
-                            <div className="ctext-center mb-2">- OR -</div>
-                            <Form.Group className="mb-3" controlId="city">
-                                <Form.Control type="text" placeholder="Enter a city name" name="city" value={formData.city} onChange={handleFormChange} />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="state">
-                                <Form.Control type="text" placeholder="Enter a state name" name="state" value={formData.state} onChange={handleFormChange} />
-                            </Form.Group>
 
-                            <Button variant='outline-info' size="sm" className='cfull-width' type="submit">Search</Button>
+                            <div className="search-options-container">
+                                <div className="search-option">
+                                    <h6 className="mb-2">Search by Postal Code:</h6>
+                                    <Form.Group controlId="postal">
+                                        <Form.Control 
+                                            type="text" 
+                                            placeholder="Enter postal code" 
+                                            name="postal" 
+                                            value={formData.postal} 
+                                            onChange={handleFormChange} 
+                                        />
+                                    </Form.Group>
+                                </div>
+
+                                <div className="text-center my-3 separator">
+                                    <span>OR</span>
+                                </div>
+
+                                <div className="search-option">
+                                    <h6 className="mb-2">Search by City & State:</h6>
+                                    <Form.Group className="mb-3" controlId="city">
+                                        <Form.Control 
+                                            type="text" 
+                                            placeholder="Enter city name" 
+                                            name="city" 
+                                            value={formData.city} 
+                                            onChange={handleFormChange} 
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="state">
+                                        <Form.Control 
+                                            type="text" 
+                                            placeholder="Enter 2 letter state code (if applicable)" 
+                                            name="state" 
+                                            value={formData.state} 
+                                            onChange={handleFormChange} 
+                                        />
+                                    </Form.Group>
+                                </div>
+                            </div>
+
+                            <Button variant='outline-info' size="sm" className='w-100' type="submit">
+                                <i className="fa fa-search" style={{ marginRight: '8px' }}></i>
+                                Search
+                            </Button>
                         </Form>
                     </Modal.Body>
                 </Modal>

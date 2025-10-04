@@ -1,7 +1,9 @@
 export interface ILocation {
     lat: number;
     lon: number;
-    city?: string;
+    latRaw: number;
+    lonRaw: number;
+    location?: string;
     state?: string;
     postalCode?: string;
     country?: string;

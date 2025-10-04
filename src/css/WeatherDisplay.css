@@ -1,0 +1,195 @@
+.weather-display-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px);
+    padding: 20px;
+    margin-top: 80px;
+}
+
+.weather-display-card {
+    background: rgb(52 47 95 / 53%);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    width: 1200px;
+    max-width: 90%;
+    min-height: 700px;
+    backdrop-filter: blur(10px);
+    color: white;
+}
+
+.last-updated {
+    text-align: right;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+/* Tab styling for dark background */
+.weather-display-card .nav-tabs {
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.weather-display-card .nav-tabs .nav-link {
+    color: rgba(255, 255, 255, 0.7);
+    border-color: transparent;
+}
+
+.weather-display-card .nav-tabs .nav-link:hover {
+    color: white;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.weather-display-card .nav-tabs .nav-link.active {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.current-weather-content {
+    padding: 20px 0;
+    min-width: 100%;
+    height: 600px;
+}
+
+.current-temp-display h1 {
+    font-size: 5rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+    color: white !important;
+}
+
+.current-temp-display p {
+    color: white !important;
+}
+
+.current-temp-display .lead {
+    color: white !important;
+}
+
+.current-temp-display .text-muted {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.weather-details-card {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.weather-details-card .card-body {
+    padding: 25px;
+}
+
+.weather-details-card i {
+    margin-right: 8px;
+    color: #6ea8fe;
+}
+
+.hourly-weather-content,
+.daily-weather-content {
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px 0;
+}
+
+.hourly-card {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: white;
+}
+
+.hourly-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.hourly-card .text-muted {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.hourly-card i {
+    color: #6ea8fe;
+}
+
+.hourly-temp {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: white;
+}
+
+.daily-card {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: white;
+}
+
+.daily-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.daily-card .text-muted {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.daily-card i {
+    color: #6ea8fe;
+}
+
+/* Scrollbar styling */
+.hourly-weather-content::-webkit-scrollbar,
+.daily-weather-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.hourly-weather-content::-webkit-scrollbar-track,
+.daily-weather-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.hourly-weather-content::-webkit-scrollbar-thumb,
+.daily-weather-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+.hourly-weather-content::-webkit-scrollbar-thumb:hover,
+.daily-weather-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .weather-display-card {
+        padding: 20px;
+        width: 96% !important;
+        margin-bottom: 100px;
+    }
+
+    .current-temp-display h1 {
+        font-size: 3.5rem;
+    }
+
+    .weather-display-container {
+        align-items: flex-start;
+        margin-top: 120px;
+        padding-left: 2%;
+        padding-right: 2%;
+        min-height: auto;
+    }
+}

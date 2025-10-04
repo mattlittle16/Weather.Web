@@ -3,6 +3,7 @@ import axios from "axios";
 import { RouterProvider } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import { LocationProvider } from './shared/LocationProvider';
+import { WeatherProvider } from './shared/WeatherProvider';
 
 declare module 'axios' {
   export interface AxiosRequestConfig {
@@ -19,7 +20,9 @@ axios.defaults.headers["Expires"] = '0';
 function App() {  
   return (
     <LocationProvider>
-      <RouterProvider router={AppRoutes} />    
+      <WeatherProvider>
+        <RouterProvider router={AppRoutes} />
+      </WeatherProvider>
     </LocationProvider>
   )
 }
