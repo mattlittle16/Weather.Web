@@ -1,0 +1,51 @@
+name: Deploy Little Weather to Homelab
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        env:
+          GEOCODE_KEY: ${{ secrets.VITE_GEOCODE_API_KEY }}
+          WEATHER_KEY: ${{ secrets.VITE_WEATHER_API_KEY }}
+        run: |
+          docker build \
+            --build-arg VITE_GEOCODE_API_KEY=$GEOCODE_KEY \
+            --build-arg VITE_WEATHER_API_KEY=$WEATHER_KEY \
+            --build-arg VITE_WEATHER_REFRESH_INTERVAL_MS=300000 \
+            -t weatherweb:latest \
+            -t weatherweb:${{ github.sha }} \
+            .
+
+      - name: Stop and remove old container
+        run: |
+          docker stop weatherweb || true
+          docker rm weatherweb || true
+
+      - name: Run new container
+        run: |
+          docker run -d \
+            --name weatherweb \
+            --restart unless-stopped \
+            --network app-network \
+            --label "com.centurylinklabs.watchtower.enable=true" \
+            weatherweb:latest
+
+      - name: Clean up old images
+        run: |
+          docker image prune -f
+
+      - name: Verify deployment
+        run: |
+          sleep 5
+          docker ps | grep weatherweb
+          echo "Deployment successful! Container is running."
