@@ -3,7 +3,7 @@ name: Deploy Little Weather to Homelab
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
