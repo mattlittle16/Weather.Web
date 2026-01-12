@@ -37,7 +37,6 @@ jobs:
             --name weatherweb \
             --restart unless-stopped \
             --network app-network \
-            --label "com.centurylinklabs.watchtower.enable=true" \
             weatherweb:latest
 
       - name: Clean up old images
